@@ -1,6 +1,6 @@
 # SleepGuru  
 
-![SleepGuru Logo](path/to/logo.png)  
+![SleepGuru Logo](logo.png)  
 
 SleepGuru is a web application developed using JavaScript, designed with a minimal and user-friendly interface to ensure ease of accessibility. The primary goal of SleepGuru is to address poor sleep cycles and their negative effects on mental and physical well-being.  
 
@@ -13,8 +13,8 @@ By collecting personalized input from users, the app creates custom sleep schedu
 - Helps users establish consistent and healthy sleep cycles.  
 
 ## Screenshots  
-![Screenshot 1](path/to/screenshot1.png)  
-![Screenshot 2](path/to/screenshot2.png)  
+![Screenshot 1](screenshot0.png)  
+![Screenshot 2](screenshot1.png)  
 
 ## Technologies Used  
 - HTML
