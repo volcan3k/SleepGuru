@@ -25,9 +25,9 @@ By collecting personalized input from users, the app creates custom sleep schedu
 To run the app locally:  
 1. Clone the repository:  
    ```bash  
-   git clone https://github.com/volcan3k/sleepguru.git
+   git clone https://github.com/volcan3k/SleepGuru.git
 2. Navigate to the project directory:
     ```bash  
-   cd sleepguru
+   cd SleepGuru
 3. Open Index.html file
 
