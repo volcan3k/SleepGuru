@@ -13,8 +13,8 @@ By collecting personalized input from users, the app creates custom sleep schedu
 - Helps users establish consistent and healthy sleep cycles.  
 
 ## Screenshots  
-![Screenshot 1](screenshot0.png)  
-![Screenshot 2](screenshot1.png)  
+![Screenshot 1](Screenshot0.png)  
+![Screenshot 2](Screenshot1.png)  
 
 ## Technologies Used  
 - HTML
