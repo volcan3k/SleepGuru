@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Guru: Study and Sleep Time Scheduler for Your Wellbeing!</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <img src="logo.png" alt="Sleep Guru Logo">
+        <h2>Study & Sleep Scheduler for Your Wellbeing!</h2>
+        <form id="schedulerForm">
+            <label for="age"><b>Your Age:</b></label>
+            <input type="number" id="age" name="age" min="18" max="25" required>
+
+            <label for="collegeTime"><b>College Timing (e.g., 9:00 AM - 5:00 PM):<b></label>
+            <input type="text" id="collegeTime" name="collegeTime" placeholder="e.g., 9:00 AM - 5:00 PM" required>
+
+            <label for="studyHours"><b>Desired Study Hours per Day:</b></label>
+            <input type="number" id="studyHours" name="studyHours" min="1" max="10" required>
+
+            <button type="button" onclick="generateSchedule()">Generate Schedule</button>
+        </form>
+
+        <div id="output" class="output" style="display: none;"></div>
+    </div>
+
+    <script>
+        function parseTime(timeStr) {
+            const [time, modifier] = timeStr.split(' ');
+            let [hours, minutes] = time.split(':').map(Number);
+            if (modifier === 'PM' && hours !== 12) hours += 12;
+            if (modifier === 'AM' && hours === 12) hours = 0;
+            return hours * 60 + minutes;
+        }
+
+        function formatTime(minutes) {
+            const hours = Math.floor(minutes / 60) % 24;
+            const mins = minutes % 60;
+            const period = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12;
+            return `${formattedHours}:${mins.toString().padStart(2, '0')} ${period}`;
+        }
+
+        function generateSchedule() {
+            const age = document.getElementById('age').value;
+            const collegeTime = document.getElementById('collegeTime').value;
+            const studyHours = document.getElementById('studyHours').value;
+
+            if (!age || !collegeTime || !studyHours) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            const [startTime, endTime] = collegeTime.split('-').map(str => str.trim());
+            const collegeStart = parseTime(startTime);
+            const collegeEnd = parseTime(endTime);
+
+            if (collegeStart >= collegeEnd) {
+                alert('Invalid college timing. Ensure the start time is before the end time.');
+                return;
+            }
+
+            let wakeUpTime = Math.max(collegeStart - 180, 0); // Wake up 3 hours before college starts
+            let sleepStart = wakeUpTime - 7 * 60; // Ensure 7 hours of sleep
+
+            // Adjust for edge cases where times cross midnight
+            if (sleepStart < 0) sleepStart += 1440;
+
+            let studyStart = collegeEnd + 30; // Start study 30 minutes after college ends
+            let studyEnd = studyStart + studyHours * 60;
+
+            if (studyEnd > 1440 || studyStart < wakeUpTime) {
+                alert('Study time overlaps with other activities or exceeds the day. Please adjust inputs.');
+                return;
+            }
+
+            let relaxStart = studyEnd;
+            let relaxEnd = Math.min(relaxStart + 120, sleepStart); // Dynamic relax time before sleep
+
+            const outputDiv = document.getElementById('output');
+            outputDiv.style.display = 'block';
+            outputDiv.innerHTML = `
+                <h3>Your Optimized Schedule:</h3>
+                <p><strong>Study Time:</strong> ${formatTime(studyStart)} - ${formatTime(studyEnd)}</p>
+                <p><strong>College Time:</strong> ${startTime} - ${endTime}</p>
+                <p><strong>Relax & Personal Time:</strong> ${formatTime(relaxStart)} - ${formatTime(relaxEnd)}</p>
+                <p><strong>Sleep Time:</strong> ${formatTime(sleepStart)} - ${formatTime(wakeUpTime)}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
